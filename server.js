@@ -14,19 +14,23 @@ const schema = buildSchema(`
 
     type Query {
         getAllTodos: [Todo]
-        getTodo: Todo
+        getTodo(id: Int!): Todo
         getCompletedTodos: [Todo]
     }`)
 
 // starting data
 const data = [
-	{ name: 'Sample Item', completed: 'True', date: new Date(), id: 1 }
+	{ name: 'Sample Item', completed: 'True', date: new Date(), id: 1 },
+    { name: 'Next', completed: 'False', date: new Date(), id: 2}
 ]
 
 // Resolvers
 const root = {
     getAllTodos: () => {
         return data
+    },
+    getTodo: ({ id }) => {
+        return data[id]
     }
 }
 
