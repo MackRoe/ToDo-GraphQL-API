@@ -7,7 +7,7 @@ const { buildSchema } = require('graphql')
 const schema = buildSchema(`
     type Todo {
         name: String!
-        completed: String
+        completed: Boolean
         date: String
         id: Int
     }
@@ -20,8 +20,8 @@ const schema = buildSchema(`
 
 // starting data
 const data = [
-	{ name: 'Sample Item', completed: 'True', date: new Date(), id: 1 },
-    { name: 'Next', completed: 'False', date: new Date(), id: 2}
+	{ name: 'Sample Item', completed: true, date: new Date(), id: 1 },
+    { name: 'Next', completed: false, date: new Date(), id: 2}
 ]
 
 // Resolvers
@@ -31,6 +31,15 @@ const root = {
     },
     getTodo: ({ id }) => {
         return data[id]
+    },
+    getCompletedTodos: () => {
+        completedItems = []
+        for (let i = 0; i < data.length; i++){
+            if (data[i].completed === true) {
+                completedItems.push(data[i])
+            }
+        }
+        return completedItems
     }
 }
 
@@ -46,5 +55,5 @@ app.use('/graphql', graphqlHTTP({
 // Start the app
 const port = 4000
 app.listen(port, () => {
-    console.log('ToDo-API running on port: ${port}')
+    console.log(`ToDo-API running on port: ${port}`)
 })
