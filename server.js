@@ -12,6 +12,11 @@ const schema = buildSchema(`
         id: Int
     }
 
+    type Mutation {
+        addTodo(name: String!): Todo
+        completeTodo: Todo
+    }
+
     type Query {
         getAllTodos: [Todo]
         getTodo(id: Int!): Todo
@@ -40,6 +45,16 @@ const root = {
             }
         }
         return completedItems
+    },
+    addTodo: ({ name }) => {
+        const newTodo = {
+            name: name,
+            completed: false,
+            date: new Date(),
+            id: data.length + 1
+        }
+        data.push(newTodo)
+        return newTodo
     }
 }
 
