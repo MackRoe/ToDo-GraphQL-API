@@ -14,7 +14,7 @@ const schema = buildSchema(`
 
     type Mutation {
         addTodo(name: String!): Todo
-        completeTodo: Todo
+        completeTodo(id: Int!): Todo
     }
 
     type Query {
@@ -55,6 +55,11 @@ const root = {
         }
         data.push(newTodo)
         return newTodo
+    },
+    completeTodo: ({ id }) => {
+        const index = id -1
+        data[index].completed = true
+        return data[index]
     }
 }
 
