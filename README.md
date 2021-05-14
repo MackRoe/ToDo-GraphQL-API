@@ -44,7 +44,7 @@
     date
     id
   }
-}``
+}`
 
 **completeTodo**
 
